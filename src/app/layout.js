@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 const poiretOne = Poiret_One({
 	variable: "--font-poiret-one",
 	weight: "400",
-	subset: ["latin"],
+	subsets: ["latin"],
 });
 
 const montserrat = Montserrat({
