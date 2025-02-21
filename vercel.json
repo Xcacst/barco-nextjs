@@ -1,7 +1,0 @@
-{
-	"install": {
-		"env": {
-			"NODE_VERSION": "22"
-		}
-	}
-}
