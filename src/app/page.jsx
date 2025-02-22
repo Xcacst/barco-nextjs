@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import {Canvas} from "@react-three/fiber";
-import {TransformControls} from "@react-three/drei";
+import {CameraControls, OrbitControls, PresentationControls, TransformControls} from "@react-three/drei";
 import {Botella, Barco} from "@/components/BarcoyBotella.jsx";
 import ChatPrompt from "@/components/ChatPrompt.jsx";
 import Haiku from "@/components/Haiku.jsx";
@@ -94,18 +94,18 @@ const App = () => {
 					 <directionalLight
 							position={[10, 20, 10]}
 							intensity={3}
-							color="#ffd27f"
+							color={boatColor}
 							castShadow="true"
 					 />
 					 <directionalLight
 							position={[-10, -20, -10]}
 							intensity={3}
-							color="#ffd27f"
+							color={waterColor}
 							castShadow="true"
 					 />
-					 <TransformControls mode={"rotate"}>
+					 <PresentationControls snap={true} global={true} speed={0.5}>
 						 <Botella color={waterColor}/>
-					 </TransformControls>
+					 </PresentationControls>
 					 <Barco color={boatColor}/>
 				 </Canvas>
 				 <Haiku
