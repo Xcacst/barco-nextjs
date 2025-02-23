@@ -10,7 +10,7 @@ function ChatPrompt({ onSend, isStarted }) {
   const handleSend = () => {
     if (message.trim() === "") return;
 
-    const prompt = `Pour le prompt suivant, réponds dans ce format : {"boatColor": "", "waterColor": "", "backgroundColor1": "", "backgroundColor1": "", "haiku_ligne_1": "", "haiku_ligne_2": "", "haiku_ligne_3": ""}. Tu dois obligatoirement entrer des couleurs hex code pour boatColor, waterColor, backgroundColor1 et backgroundColor2 et enfin générer un haiku en rapport au prompt pour haiku ligne 1, 2 et 3. Aucun commentaire, aucun console.log, aucune ligne en plus, juste les valeurs, aucun caractère spécial, aucune infos. Ne met rien pour annoncer la réponse, évite les '\`\`\`' au début et à la fin. Je ne veux rien avant, rien après. Le prompt: ${message}`;
+    const prompt = `Pour le prompt suivant, réponds dans ce format : {"boatColor": "", "waterColor": "", "backgroundColor1": "", "backgroundColor1": "", "haiku_ligne_1": "", "haiku_ligne_2": "", "haiku_ligne_3": ""}. Tu dois obligatoirement entrer des couleurs hex code pour boatColor, waterColor, backgroundColor1 et backgroundColor2 et enfin générer un haiku sur le thème de la mer, la nostalgie, la navigation, le bateau, et obligatoirement en rapport au prompt pour haiku ligne 1, 2 et 3. Les couleurs pour backgroundColor1 et backgroundColor2 doivent créer un dégradé harmonieux, éviter le blanc pur et le noir pur, et contraster avec boatColor et waterColor. Aucun commentaire, aucun console.log, aucune ligne en plus, juste les valeurs, aucun caractère spécial, aucune infos. Ne met rien pour annoncer la réponse, évite les '\`\`\`' au début et à la fin. Je ne veux rien avant, rien après. Le prompt: ${message}`;
 
     onSend(prompt);
     setMessage("");
@@ -43,7 +43,7 @@ function ChatPrompt({ onSend, isStarted }) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="Escribe tu prompt..."
+        placeholder="What are you thinking about?"
         style={{
           flex: 1,
           padding: "0.5rem",
@@ -62,7 +62,7 @@ function ChatPrompt({ onSend, isStarted }) {
           cursor: "pointer",
         }}
       >
-        Enviar
+        Send
       </button>
     </div>
   );

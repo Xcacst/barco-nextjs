@@ -24,7 +24,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-	title: "Echos dans la bouteille",
+	title: "Echoes in a Bottle",
 	description: "A 3D Generative Art project by Xcaret Castillo Sanchez",
 };
 
