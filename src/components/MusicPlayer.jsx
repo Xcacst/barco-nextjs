@@ -1,14 +1,23 @@
 import {useEffect, useRef, useState} from "react";
 
-export default function MusicPlayer() {
+export default function MusicPlayer({play}) {
 	const audioRef = useRef(null);
 	const [isPlaying, setIsPlaying] = useState(false);
+	
+	const visibility = {
+		opacity: play ? 1 : 0,
+		pointerEvents: play ? "auto" : "none",
+		transition: "opacity 0.5s",
+	}
 	
 	useEffect(() => {
 		const audio = audioRef.current;
 		if (!audio) return;
 		setIsPlaying(true);
-		audio.volume = 0.1;
+		audio.volume = 0.5;
+		
+		
+		play ? audio.play() : audio.pause();
 		
 		const handlePlay = () => {
 			setIsPlaying(true);
@@ -22,7 +31,7 @@ export default function MusicPlayer() {
 			audio.removeEventListener("play", handlePlay);
 			audio.removeEventListener("pause", handlePause);
 		};
-	}, []);
+	}, [play]);
 	
 	const handlePlayPause = () => {
 		const audio = audioRef.current;
@@ -39,7 +48,7 @@ export default function MusicPlayer() {
 	
 	return (
 		 <>
-			 <div className={"playBtnContainer"}>
+			 <div className={"playBtnContainer"} style={{...visibility}}>
 				 <audio ref={audioRef} src="/The Sixth Station (Spirited Away).mp3"/>
 				 <div className={isPlaying ? "playBtn play" : "playBtn pause"} onClick={handlePlayPause}>
 					 {Array.from({length: 10}).map((_, i) => (

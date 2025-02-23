@@ -2,13 +2,15 @@
 
 import {useState} from "react";
 import {Canvas} from "@react-three/fiber";
-import {CameraControls, OrbitControls, PresentationControls, TransformControls} from "@react-three/drei";
+import {PresentationControls} from "@react-three/drei";
 import {Botella, Barco} from "@/components/BarcoyBotella.jsx";
 import ChatPrompt from "@/components/ChatPrompt.jsx";
 import Haiku from "@/components/Haiku.jsx";
 import MusicPlayer from "@/components/MusicPlayer.jsx";
+import Start from "@/components/Start.jsx";
 
 const App = () => {
+	const [isStarted, setIsStarted] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [boatColor, setBoatColor] = useState();
@@ -19,6 +21,10 @@ const App = () => {
 	const [haikuLigne1, setHaikuLigne1] = useState();
 	const [haikuLigne2, setHaikuLigne2] = useState();
 	const [haikuLigne3, setHaikuLigne3] = useState();
+	
+	const handleStart = () => {
+		setIsStarted(true);
+	}
 	
 	const handleSendMessage = async (message) => {
 		setIsLoading(true);
@@ -83,12 +89,13 @@ const App = () => {
 					overflow: "hidden",
 				}}
 		 >
-			 <MusicPlayer/>
+			 <Start onStart={handleStart} isVisible={isStarted}/>
+			 <MusicPlayer play={isStarted}/>
 			 <div className="container">
 				 <Canvas
 						camera={{position: [25, 5, -5], fov: 9}}
 						gl={{localClippingEnabled: true}}
-						style={{left: "10%", top: "10%"}}
+						style={{left: isStarted ? "10%" : "0%", top: isStarted ? "10%": "0%", transition: "all 1s"}}
 				 >
 					 <ambientLight intensity={2}/>
 					 <directionalLight
@@ -106,7 +113,7 @@ const App = () => {
 					 <PresentationControls snap={true} global={true} speed={0.5}>
 						 <Botella color={waterColor}/>
 					 </PresentationControls>
-					 <Barco color={boatColor}/>
+					 <Barco color={boatColor} isVisible={isStarted}/>
 				 </Canvas>
 				 <Haiku
 						haiku={[haikuLigne1, haikuLigne2, haikuLigne3].filter(
@@ -123,7 +130,7 @@ const App = () => {
 				 {error && <p style={{color: "red"}}>Error: {error}</p>}
 				 
 				 {/* Componente para enviar mensajes */}
-				 <ChatPrompt onSend={handleSendMessage}/>
+				 <ChatPrompt onSend={handleSendMessage} isStarted={isStarted}/>
 			 </div>
 		 </div>
 	);

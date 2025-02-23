@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
-function ChatPrompt({ onSend }) {
+function ChatPrompt({ onSend, isStarted }) {
   const [message, setMessage] = useState("");
+  const visibility = {
+    opacity: isStarted ? 1 : 0,
+    pointerEvents: isStarted ? "auto" : "none",
+  }
 
   const handleSend = () => {
     if (message.trim() === "") return;
@@ -21,6 +25,7 @@ function ChatPrompt({ onSend }) {
   return (
     <div
       style={{
+        ...visibility,
         position: "absolute",
         bottom: 0,
         left: 0,
@@ -30,6 +35,7 @@ function ChatPrompt({ onSend }) {
         display: "flex",
         gap: "0.5rem",
         justifyContent: "center",
+        transition: "opacity 0.5s",
       }}
     >
       <input

@@ -76,13 +76,19 @@ export function Botella(props) {
 
 export function Barco(props) {
 	const {nodes, materials} = useGLTF("/Bateaupapierfinal1.glb");
-	const boatRef = useRef();
+	const boatRef = useRef(null);
 	
 	useEffect(() => {
 		if (materials["barco papel"] && props.color) {
 			materials["barco papel"].color = new THREE.Color(props.color);
 		}
 	}, [props.color, materials]);
+	
+	useEffect(() => {
+		if (boatRef.current) {
+			boatRef.current.scale.set(0, 0, 0); // Définir la scale initiale à 0
+		}
+	}, []);
 	
 	useFrame(({clock}) => {
 		if (boatRef.current) {
@@ -93,6 +99,15 @@ export function Barco(props) {
 		}
 	});
 	
+	useFrame(() => {
+		if (boatRef.current) {
+			const targetScale = props.isVisible ? -0.1 : 0;
+			boatRef.current.scale.x = THREE.MathUtils.lerp(boatRef.current.scale.x, targetScale, 0.1);
+			boatRef.current.scale.y = THREE.MathUtils.lerp(boatRef.current.scale.y, targetScale, 0.1);
+			boatRef.current.scale.z = THREE.MathUtils.lerp(boatRef.current.scale.z, targetScale, 0.1);
+		}
+	});
+	
 	return (
 		 <group {...props} ref={boatRef} dispose={null}>
 			 <mesh
@@ -100,7 +115,7 @@ export function Barco(props) {
 					material={materials["barco papel"]}
 					position={[0, -0.05, -0.05]}
 					rotation={[0, 0, 0]}
-					scale={-0.1}
+					//scale={-0.1}
 			 />
 		 </group>
 	);
