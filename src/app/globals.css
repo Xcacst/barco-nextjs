@@ -191,3 +191,9 @@ span:nth-child(10) {
   }
 }
 
+@media screen and (max-width: 576px) {
+  .canvas {
+    left: 0 !important;
+  }
+}
+

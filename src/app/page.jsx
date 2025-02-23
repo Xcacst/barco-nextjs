@@ -95,6 +95,7 @@ const App = () => {
 				 <Canvas
 						camera={{position: [25, 5, -5], fov: 9}}
 						gl={{localClippingEnabled: true}}
+						className={"canvas"}
 						style={{left: isStarted ? "10%" : "0%", top: isStarted ? "10%": "0%", transition: "all 1s"}}
 				 >
 					 <ambientLight intensity={2}/>
