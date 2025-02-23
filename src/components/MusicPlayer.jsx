@@ -14,7 +14,7 @@ export default function MusicPlayer({play}) {
 		const audio = audioRef.current;
 		if (!audio) return;
 		setIsPlaying(true);
-		audio.volume = 0.5;
+		audio.volume = 0.1;
 		
 		
 		play ? audio.play() : audio.pause();
