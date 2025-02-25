@@ -49,7 +49,7 @@ export default function MusicPlayer({play}) {
 	return (
 		 <>
 			 <div className={"playBtnContainer"} style={{...visibility}}>
-				 <audio ref={audioRef} src="/TheSixthNation_Celesta.logicx.mp3"/>
+				 <audio ref={audioRef} src="/TheSixthNation_Celesta.logicx.mp3" loop/>
 				 <div className={isPlaying ? "playBtn play" : "playBtn pause"} onClick={handlePlayPause}>
 					 {Array.from({length: 10}).map((_, i) => (
 							<span key={i} style={{}}></span>

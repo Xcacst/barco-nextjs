@@ -1,51 +1,59 @@
-import {useEffect, useRef} from "react";
-import {gsap} from "gsap";
-import {TextPlugin} from "gsap/TextPlugin";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { TextPlugin } from "gsap/TextPlugin";
 
 gsap.registerPlugin(TextPlugin);
 
-export default function Haiku(props) {
+export default function Haiku({ haiku, boatColor }) {
 	const haikuRef = useRef([]);
+	const tlRef = useRef(null);
 	
 	useEffect(() => {
-		if (!props.haiku || props.haiku.length === 0) return;
+		if (!haiku || haiku.length === 0) return;
+		
+		if (tlRef.current) {
+			tlRef.current.kill();
+		}
 		
 		const tl = gsap.timeline({
-			defaults: {ease: "power2.out", duration: 0.5},
+			defaults: { ease: "power2.out", duration: 0.5 },
 		});
 		
-		props.haiku.forEach((text, index) => {
-			const p = haikuRef.current[index];
-			const letters = text.split("");
-			p.innerHTML = "";
-			letters.forEach((letter) => {
-				const span = document.createElement("span");
-				span.textContent = letter === " " ? "\u00A0" : letter;
-				span.style.display = "inline-block";
-				p.appendChild(span);
-			});
-			
+		haikuRef.current.forEach((p) => {
+			if (!p) return;
+			const letters = p.querySelectorAll("span");
 			tl.fromTo(
-				 p.querySelectorAll("span"),
-				 {opacity: 0, y: 15, x: 10},
-				 {opacity: 1, y: 0, x: 0, stagger: 0.05},
-				 `+=0.1`
+				 letters,
+				 { opacity: 0, y: 15, x: 10 },
+				 { opacity: 1, y: 0, x: 0, stagger: 0.05 },
+				 "+=0.1"
 			);
 		});
-	}, [props.haiku]);
+		
+		tlRef.current = tl;
+	}, [haiku]);
 	
 	return (
-		 <div className={"haiku"}>
-			 {
-				 props.haiku.map((line, index) => (
+		 <div className="haiku" style={{ textAlign: "center" }}>
+			 {haiku.map((line, index) => {
+				 const letters = line.split("");
+				 return (
 						<p
 							 key={index}
-							 ref={(el) => (haikuRef.current[index] = el)}
-							 data-text={line}
-							 style={{color: "white", textShadow: `2px 2px 1px rgba(0,0,0,0.5)`}}
-						></p>
-				 ))
-			 }
+							 ref={(el) => (haikuRef.current[index] = el)} // On stocke chaque <p> dans haikuRef.current[index]
+							 style={{
+								 color: "white",
+								 textShadow: "2px 2px 1px rgba(0,0,0,0.5)",
+							 }}
+						>
+							{letters.map((letter, i) => (
+								 <span key={i} style={{ display: "inline-block" }}>
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+							))}
+						</p>
+				 );
+			 })}
 		 </div>
 	);
 }

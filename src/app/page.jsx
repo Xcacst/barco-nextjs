@@ -18,9 +18,10 @@ const App = () => {
 		 useState("rgb(148, 163, 184)");
 	const [backgroundColor2, setBackgroundColor2] = useState("#fffce0");
 	const [waterColor, setWaterColor] = useState();
-	const [haikuLigne1, setHaikuLigne1] = useState();
+	const [haiku, setHaiku] = useState([]);
+	/*const [haikuLigne1, setHaikuLigne1] = useState();
 	const [haikuLigne2, setHaikuLigne2] = useState();
-	const [haikuLigne3, setHaikuLigne3] = useState();
+	const [haikuLigne3, setHaikuLigne3] = useState();*/
 	
 	const handleStart = () => {
 		setIsStarted(true);
@@ -52,8 +53,6 @@ const App = () => {
 			
 			const parsedResponse = JSON.parse(cleanedResponse);
 			
-			console.log("Respuesta:", parsedResponse);
-			
 			const {
 				boatColor,
 				waterColor,
@@ -68,9 +67,7 @@ const App = () => {
 			if (backgroundColor2) setBackgroundColor2(backgroundColor2);
 			if (boatColor) setBoatColor(boatColor);
 			if (waterColor) setWaterColor(waterColor);
-			if (haiku_ligne_1) setHaikuLigne1(haiku_ligne_1);
-			if (haiku_ligne_2) setHaikuLigne2(haiku_ligne_2);
-			if (haiku_ligne_3) setHaikuLigne3(haiku_ligne_3);
+			if (haiku_ligne_1 && haiku_ligne_2 && haiku_ligne_3) setHaiku([haiku_ligne_1, haiku_ligne_2, haiku_ligne_3]);
 		} catch (error) {
 			console.error("Error al enviar el mensaje:", error);
 			setError(error.message);
@@ -96,7 +93,7 @@ const App = () => {
 						camera={{position: [25, 5, -5], fov: 9}}
 						gl={{localClippingEnabled: true}}
 						className={"canvas"}
-						style={{left: isStarted ? "10%" : "0%", top: isStarted ? "10%": "0%", transition: "all 1s"}}
+						style={{left: isStarted ? "10%" : "0%", top: isStarted ? "10%" : "0%", transition: "all 1s"}}
 				 >
 					 <ambientLight intensity={2}/>
 					 <directionalLight
@@ -117,18 +114,8 @@ const App = () => {
 					 <Barco color={boatColor} isVisible={isStarted}/>
 				 </Canvas>
 				 <Haiku
-						haiku={[haikuLigne1, haikuLigne2, haikuLigne3].filter(
-							 (line) => line && line.trim() !== ""
-						)}
-						boatColor={boatColor}
-						waterColor={waterColor}
+						haiku={haiku}
 				 />
-				 
-				 {/* Mostrar mensaje de carga */}
-				 {isLoading && <p>Generando respuesta...</p>}
-				 
-				 {/* Mostrar mensaje de error */}
-				 {error && <p style={{color: "red"}}>Error: {error}</p>}
 				 
 				 {/* Componente para enviar mensajes */}
 				 <ChatPrompt onSend={handleSendMessage} isStarted={isStarted}/>
