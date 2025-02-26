@@ -49,19 +49,19 @@ export default function MusicPlayer({play}) {
 	return (
 		 <>
 			 <div className={"playBtnContainer"} style={{...visibility}}>
-				 <audio ref={audioRef} src="/TheSixthNation_Celesta.logicx.mp3" loop/>
+				 <audio ref={audioRef} src="/echoesinabottle.mp3" loop/>
 				 <div className={isPlaying ? "playBtn play" : "playBtn pause"} onClick={handlePlayPause}>
 					 {Array.from({length: 10}).map((_, i) => (
 							<span key={i} style={{}}></span>
 					 ))}
 				 </div>
-				 <div className={"musicLinkContainer"}>
+				 {/*<div className={"musicLinkContainer"}>
 					 <a className={isPlaying ? "musicLink play" : "musicLink pause"}
 					    href={"https://www.youtube.com/watch?v=qSNi0kYQH8Q"} target={"_blank"}>The Sixth
 						 Station (Spirited Away) -
 						 Joe
 						 Hisaishi</a>
-				 </div>
+				 </div>*/}
 			 </div>
 		 </>
 	);
