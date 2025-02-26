@@ -187,7 +187,7 @@ span:nth-child(10) {
 @media screen and (max-width: 768px) {
   .haiku {
     top: 15%;
-    font-size: 30px;
+    font-size: 28px;
   }
 }
 
